@@ -1,17 +1,10 @@
 import { CheckCircle, OctagonAlert } from "lucide-react"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { io, Socket } from "socket.io-client"
+import { SensorStatusProps } from "../library/interfaces";
 
-interface SensorStatusProps {
-  sensor: Sensor
-}
 
-interface SensorData {
-  temperature?: number
-  humidity?: number
-  airflow?: number
-  pressure?: number
-}
+
 
 export default function SensorStatus({ sensor }: SensorStatusProps) {
   const [isConnected, setIsConnected] = useState(false)
@@ -46,12 +39,12 @@ export default function SensorStatus({ sensor }: SensorStatusProps) {
         }
       });
 
-    // Mark offline if no update for 10 seconds
+    // Mark offline if no update for 5 seconds
     const interval = setInterval(() => {
-        if (lastSeen && Date.now() - lastSeen > 10000) {
+        if (lastSeen && Date.now() - lastSeen > 5000) {
           setIsOnline(false);
         }
-      }, 10000); // Check every 10s
+      }, 5000); // Check every 5s
 
       return () => {
         console.log("Cleaning up socket connection");
@@ -68,8 +61,8 @@ export default function SensorStatus({ sensor }: SensorStatusProps) {
   
   return (
     <div className="flex items-center space-x-2">
-      <span className="font-medium">{sensor.name}:</span>
-      <span className={`text-sm ${isOnline ? "text-green-700" : "text-red-700"}`}>
+      <span className="font-sm">{sensor.name}:</span>
+      <span className={`text-sm hidden lg:inline ${isOnline ? "text-green-700" : "text-red-700"}`}>
         {isOnline ? "Online" : "Offline"}
       </span>
       {isOnline ? (

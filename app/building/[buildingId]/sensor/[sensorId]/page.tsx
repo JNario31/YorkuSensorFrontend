@@ -39,7 +39,6 @@ export default function SensorPage() {
         title={`Sensor ID: ${sensorId}`}
         description="Real-time sensor data for temperature, humidity, airflow, and pressure"
         lineColors={lineColors}
-        height={400}
       />
     </div>
   );

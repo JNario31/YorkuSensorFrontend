@@ -4,18 +4,10 @@ import { useState } from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { SensorChart } from "./sensor-chart";
-import type { ChartConfig } from "@/components/ui/chart";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { SensorCardProps } from "@/app/library/interfaces";
 
-interface SensorCardProps {
-  sensorId: string;
-  chartConfig: Record<string, ChartConfig>; // Accept multiple configs
-  dataKeys: string[];
-  title: string;
-  description: string;
-  lineColors: Record<string, string>;
-  height?: number;
-}
+
 
 export default function SensorCard({
   sensorId,
@@ -24,7 +16,6 @@ export default function SensorCard({
   dataKeys,
   chartConfig,
   lineColors,
-  height = 400,
 }: SensorCardProps) {
   const [timeRange, setTimeRange] = useState("1h");
 
@@ -69,7 +60,9 @@ export default function SensorCard({
           ))}
         </Tabs>
       </CardContent>
-      <CardFooter>{/* Additional controls */}</CardFooter>
+      <CardFooter>
+        <Button>Download</Button>
+      </CardFooter>
     </Card>
   );
 }

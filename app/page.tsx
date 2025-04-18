@@ -57,12 +57,12 @@ export default function Home() {
   return (
     <div className="container mx-auto grid grid-cols-2">
       <div className="space-y-8">
-        <div className="grid grid-cols-2">
+        <div className="flex flex-col">
           
         
               {buildings.map((building) => (
                   <div className="p-4" key={building.id}>
-                  <Card key={building.id}className="col-span-2">
+                  <Card key={building.id} >
                     <CardHeader>
                       <CardTitle>{building.name}</CardTitle>
                       <CardDescription>{`${building.name} Sensor Status`}</CardDescription>

@@ -5,6 +5,7 @@ import { useSocket } from "@/hooks/useSockets";
 import { Building2, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react"
+import { Building, Sensor } from "../library/interfaces";
 
 export function NavBuilding(){
     const socket = useSocket();

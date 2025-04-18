@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { toast } from "sonner"
 import type { Socket } from "socket.io-client"
-import type { ActionType } from "./setting-form"
+import { SubscriberFormProps } from "@/app/library/interfaces"
 
 // Define subscriber schema
 const subscriberSchema = z.object({
@@ -17,11 +17,7 @@ const subscriberSchema = z.object({
 
 type SubscriberFormValues = z.infer<typeof subscriberSchema>
 
-interface SubscriberFormProps {
-  actionType: ActionType
-  isConnected: boolean
-  socket: Socket
-}
+
 
 export function SubscriberForm({ actionType, isConnected, socket }: SubscriberFormProps) {
   // Initialize the form

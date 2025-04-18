@@ -5,20 +5,13 @@ import io from "socket.io-client"
 import { SubscriberForm } from "./subscriber-form"
 import { BuildingForm } from "./building-form"
 import { SensorForm } from "./sensor-form"
+import { SettingFormProps } from "@/app/library/interfaces"
 
 // Initialize socket connection with environment variable
 const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:4000"
 const socket = io(socketUrl)
 
-// Define types
-export type EntityType = "building" | "sensor" | "subscriber"
-export type ActionType = "add" | "delete"
 
-// Define the props for the reusable form
-interface SettingFormProps {
-  entityType: EntityType
-  actionType: ActionType
-}
 
 export function SettingForm({ entityType, actionType }: SettingFormProps) {
   const [isConnected, setIsConnected] = useState(socket.connected)

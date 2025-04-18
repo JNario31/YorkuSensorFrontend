@@ -9,8 +9,7 @@ import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { toast } from "sonner"
-import type { Socket } from "socket.io-client"
-import type { ActionType } from "./setting-form"
+import { SensorFormProps } from "@/app/library/interfaces"
 
 // Define sensor schema
 const sensorSchema = z.object({
@@ -20,11 +19,6 @@ const sensorSchema = z.object({
 
 type SensorFormValues = z.infer<typeof sensorSchema>
 
-interface SensorFormProps {
-  actionType: ActionType
-  isConnected: boolean
-  socket: Socket
-}
 
 export function SensorForm({ actionType, isConnected, socket }: SensorFormProps) {
   const [buildings, setBuildings] = useState<{ id: number; name: string }[]>([])

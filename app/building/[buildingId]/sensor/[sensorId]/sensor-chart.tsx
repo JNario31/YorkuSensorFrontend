@@ -3,7 +3,8 @@
 import { useEffect, useState, useCallback } from "react"
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, XAxis, YAxis } from "recharts"
 import { io } from "socket.io-client"
-import { type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
+import { SensorChartProps, SensorData } from "@/app/library/interfaces"
 
 // Define time ranges for data fetching
 const TIME_RANGES = {
@@ -12,17 +13,6 @@ const TIME_RANGES = {
   WEEK: "7d",
   MONTH: "30d",
   ALLTIME: "all-time",
-}
-
-
-
-interface SensorChartProps {
-  sensorId: string
-  chartConfig: ChartConfig
-  dataKey: string
-  lineColors: Record<string, string>
-  maxDataPoints?: number
-  timeRange?: string
 }
 
 export function SensorChart({
@@ -83,7 +73,7 @@ export function SensorChart({
       socket.on("sensor_update", (update) => {
         console.log("Received sensor_update:", update)
   
-        if (update.status_code === 200 && update.data) {
+        if (update.status_code === 200 && update.data && update.data.id == sensorId) {
           setSensorData((prevData) => {
             const updatedData = [...prevData, update.data]
             return updatedData.slice(-maxDataPoints)
@@ -124,7 +114,7 @@ export function SensorChart({
   }, [fetchData])
 
   return (
-    <div className="w-full h-[400px]">
+    <div className="w-full h-[300px]">
       {isLoading ? (
         <div className="flex items-center justify-center h-full">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
@@ -138,7 +128,7 @@ export function SensorChart({
           <p className="text-muted-foreground">No data available for the selected time range</p>
         </div>
       ) : (
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" aspect={4/3}>
           <ChartContainer config={chartConfig} className="w-full h-full">
             <LineChart
               accessibilityLayer

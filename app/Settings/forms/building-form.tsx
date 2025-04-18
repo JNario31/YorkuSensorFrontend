@@ -7,8 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { toast } from "sonner"
-import type { Socket } from "socket.io-client"
-import type { ActionType } from "./setting-form"
+import { BuildingFormProps } from "@/app/library/interfaces"
 
 // Define building schema
 const buildingSchema = z.object({
@@ -17,11 +16,7 @@ const buildingSchema = z.object({
 
 type BuildingFormValues = z.infer<typeof buildingSchema>
 
-interface BuildingFormProps {
-  actionType: ActionType
-  isConnected: boolean
-  socket: Socket
-}
+
 
 export function BuildingForm({ actionType, isConnected, socket }: BuildingFormProps) {
   // Initialize the form

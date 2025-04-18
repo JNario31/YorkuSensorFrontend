@@ -12,15 +12,9 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer"
 import { SettingForm } from "./forms/setting-form"
+import { SettingCardProps } from "../library/interfaces"
 
-interface SettingCardProps {
-  cardTitle: string
-  cardDescription: string
-  buttonName: string
-  drawerTitle: string
-  drawerDescription: string
-  entityType: "building" | "sensor" | "subscriber"
-}
+
 
 export default function SettingCard({
   cardTitle,
@@ -42,14 +36,18 @@ export default function SettingCard({
             <Button>{buttonName}</Button>
           </DrawerTrigger>
           <DrawerContent>
-            <DrawerHeader>
-              <DrawerTitle>{drawerTitle}</DrawerTitle>
-              <DrawerDescription>{drawerDescription}</DrawerDescription>
-            </DrawerHeader>
-            <SettingForm entityType={entityType} actionType="add" />
-            <DrawerFooter>
-              <DrawerClose>Cancel</DrawerClose>
-            </DrawerFooter>
+            <div className="mx-auto w-full max-w-sm">      
+              <DrawerHeader>
+                <DrawerTitle>{drawerTitle}</DrawerTitle>
+                <DrawerDescription>{drawerDescription}</DrawerDescription>
+              </DrawerHeader>
+              <div className="p-4 pb-0">
+                <SettingForm entityType={entityType} actionType="add" />
+                <DrawerFooter>
+                  <DrawerClose>Cancel</DrawerClose>
+                </DrawerFooter>
+              </div>
+            </div>
           </DrawerContent>
         </Drawer>
       </CardContent>
@@ -59,14 +57,18 @@ export default function SettingCard({
             <Button variant="destructive">Delete {buttonName}</Button>
           </DrawerTrigger>
           <DrawerContent>
+          <div className="mx-auto w-full max-w-sm">  
             <DrawerHeader>
               <DrawerTitle>Delete {drawerTitle}</DrawerTitle>
               <DrawerDescription>Delete {drawerDescription}</DrawerDescription>
             </DrawerHeader>
-            <SettingForm entityType={entityType} actionType="delete" />
-            <DrawerFooter>
-              <DrawerClose>Cancel</DrawerClose>
-            </DrawerFooter>
+            <div className="p-4 pb-0">
+              <SettingForm entityType={entityType} actionType="delete" />
+              <DrawerFooter>
+                <DrawerClose>Cancel</DrawerClose>
+              </DrawerFooter>
+            </div>
+          </div>
           </DrawerContent>
         </Drawer>
       </CardFooter>

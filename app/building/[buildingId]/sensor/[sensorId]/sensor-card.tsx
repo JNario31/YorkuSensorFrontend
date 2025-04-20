@@ -61,7 +61,25 @@ export default function SensorCard({
         </Tabs>
       </CardContent>
       <CardFooter>
-        <Button>Download</Button>
+        <Button onClick={async () => {
+          const apiUrl = "http://localhost:4000";
+          console.log(`Sensor Id ${sensorId}`)
+          const res = await fetch(`${apiUrl}/export/${sensorId}`);
+          if (!res.ok) {
+            console.error("status code:", res.status);
+            throw new Error("Download failed");
+          }
+          const blob = await res.blob();
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = `sensor_${sensorId}.csv`;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          URL.revokeObjectURL(url);
+        }
+    }>Download</Button>
       </CardFooter>
     </Card>
   );

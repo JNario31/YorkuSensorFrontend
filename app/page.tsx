@@ -4,6 +4,8 @@ import { useSocket } from "@/hooks/useSockets";
 import { useEffect, useState } from "react";
 import SensorStatus from "./homepage/sensor-status";
 import AlertTable from "./homepage/alert-table";
+import AlertTableCard from "./homepage/alert-table-card";
+import { Building, Sensor } from "./library/interfaces";
 
 export default function Home() {
   const socket = useSocket();
@@ -90,7 +92,7 @@ export default function Home() {
             <CardDescription>Global Alert Notifications</CardDescription>
           </CardHeader>
           <CardContent>
-            <AlertTable/>
+            <AlertTableCard/>
           </CardContent>
         </Card>
       </div>

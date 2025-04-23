@@ -3,9 +3,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useSocket } from "@/hooks/useSockets";
 import { useEffect, useState } from "react";
 import SensorStatus from "./homepage/sensor-status";
-import AlertTable from "./homepage/alert-table";
-import AlertTableCard from "./homepage/alert-table-card";
 import { Building, Sensor } from "./library/interfaces";
+import AlertTableItems from "./homepage/alert-table-items";
+
 
 export default function Home() {
   const socket = useSocket();
@@ -57,11 +57,9 @@ export default function Home() {
         }, [socket]);
 
   return (
-    <div className="container mx-auto grid grid-cols-2">
-      <div className="space-y-8">
+    <div className="container mx-auto flex gap-4">
+      <div className="w-2/5 space-y-8">
         <div className="flex flex-col">
-          
-        
               {buildings.map((building) => (
                   <div className="p-4" key={building.id}>
                   <Card key={building.id} >
@@ -80,19 +78,19 @@ export default function Home() {
                     </CardContent>
                   </Card>
                   </div>
-              ))}
-              
+              ))} 
           </div>
       </div>
       
-      <div className="p-4 space-y-8">
-        <Card>
+      <div className="w-3/5 p-4 space-y-8">
+        <Card className="h-full flex flex-col">
           <CardHeader>
             <CardTitle>Alerts</CardTitle>
             <CardDescription>Global Alert Notifications</CardDescription>
           </CardHeader>
           <CardContent>
-            <AlertTableCard/>
+            <AlertTableItems timeRange={""}/>
+            
           </CardContent>
         </Card>
       </div>

@@ -62,7 +62,7 @@ export default function AlertTableItems({ timeRange }: AlertTableItemsProps) {
 
     socket.on("surpassed_threshold", (update) => {
       if (update.status_code === 200 && update.data) {
-        toast(`${update.data.alert_type}: ${update.data.value}`, {
+        toast.error(`${update.data.alert_type}: ${update.data.value}`, {
           description: new Date(update.data.timestamp).toLocaleString(),
         })
         setAlerts((prev) => [...prev, update.data])
@@ -146,7 +146,9 @@ export default function AlertTableItems({ timeRange }: AlertTableItemsProps) {
   ]
 
   // 3) wire up React-Table with alerts
-  const [sorting, setSorting] = React.useState<SortingState>([])
+  const [sorting, setSorting] = React.useState<SortingState>([
+    { id: "timestamp", desc: true },
+  ])
   const [globalFilter, setGlobalFilter] = React.useState<string>("")
   const [columnFilters, setColumnFilters] =React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})

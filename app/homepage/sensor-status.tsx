@@ -48,7 +48,7 @@ export default function SensorStatus({ sensor }: SensorStatusProps) {
 
   return (
     <div className="flex items-center space-x-2">
-      <span className="font-sm">{sensor.name}:</span>
+      <span className="font-sm">{sensor.name} (ID: {sensor.id}):</span>
       <span className={`text-sm hidden lg:inline ${
           isOnline ? "text-green-700" : "text-red-700"
         }`}>

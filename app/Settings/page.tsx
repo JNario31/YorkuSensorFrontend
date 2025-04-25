@@ -4,7 +4,8 @@ import SettingCard from "./setting"
 export default function SettingsPage() {
   return (
     <div className="container mx-auto p-4 space-y-8">
-      {/* Each SettingCard is already a Card component, so they should be siblings */}
+      <h1 className="text-2xl font-semibold mb-6">Settings</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       <SettingCard
         cardTitle={"Building Settings"}
         cardDescription={"Add or delete building (Input Building Name)"}
@@ -31,6 +32,7 @@ export default function SettingsPage() {
         drawerDescription={"Subscribe or Unsubscribe"}
         entityType={"subscriber"}
       />
+      </div>
     </div>
   )
 }

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { SensorChart } from "./sensor-chart";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SensorCardProps } from "@/app/library/interfaces";
+import { toast } from "sonner";
 
 
 
@@ -18,6 +19,37 @@ export default function SensorCard({
   lineColors,
 }: SensorCardProps) {
   const [timeRange, setTimeRange] = useState("1h");
+   const apiUrl = "http://localhost:4000"
+
+  const handleDownload = async () => {
+    try {
+      const res = await fetch(`${apiUrl}/export/${sensorId}`)
+
+      if (!res.ok) {
+        // pop an error toast if there's no data (or any non-200 status)
+        toast.error(`No data available for sensor ${sensorId}`, {
+          description: `Server returned ${res.status}`,
+        })
+        return
+      }
+
+      const blob = await res.blob()
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement("a")
+      a.href = url
+      a.download = `sensor_${sensorId}.csv`
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+      URL.revokeObjectURL(url)
+
+      // optional: show success toast
+      toast.success("Download starting!")
+    } catch (err) {
+      console.error(err)
+      toast.error("Download failed. Please try again.")
+    }
+  }
 
   return (
     <Card>
@@ -61,25 +93,8 @@ export default function SensorCard({
         </Tabs>
       </CardContent>
       <CardFooter>
-        <Button onClick={async () => {
-          const apiUrl = "http://localhost:4000";
-          console.log(`Sensor Id ${sensorId}`)
-          const res = await fetch(`${apiUrl}/export/${sensorId}`);
-          if (!res.ok) {
-            console.error("status code:", res.status);
-            throw new Error("Download failed");
-          }
-          const blob = await res.blob();
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement("a");
-          a.href = url;
-          a.download = `sensor_${sensorId}.csv`;
-          document.body.appendChild(a);
-          a.click();
-          a.remove();
-          URL.revokeObjectURL(url);
-        }
-    }>Download</Button>
+        <Button onClick={handleDownload}
+          >Download</Button>
       </CardFooter>
     </Card>
   );

@@ -20,6 +20,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "MicroFab Lab",
   description: "Sensor Dashboard for York University Mircofabrication labs",
+  icons: "/YorkULogo_DIGITAL_Ver_RGB.svg"
 };
 
 export default function RootLayout({
